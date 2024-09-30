@@ -12,20 +12,21 @@ const figureOutPricePlan = (price) => {
   if (price === 1000) return "License 01";
   if (price === 2000) return "Lisence 02";
   if (price === 3000) return "Lisence 03";
+  return null;
 };
 const updateUserInDatabase = async (email, planName) => {
   try {
-    const config = {
-      user: "your_db_username",
-      password: "your_db_password",
-      server: "your_db_server",
-      database: "your_db_name",
-      options: {
-        encrypt: true,
-        trustServerCertificate: true,
-      },
-    };
-
+   const config = {
+  user: "sqlserver",
+  password: "ModelHealth@1234",
+  server: "34.173.12.179",
+  port: 1433, // Add the port here
+  database: "Revit_Payment", // Replace with your actual database name
+  options: {
+    encrypt: true, // Use true if required (e.g., for Azure SQL)
+    trustServerCertificate: true, // Set to true if you're using self-signed certificates
+  },
+};
     const pool = await sql.connect(config);
 
     const query = `UPDATE Users SET plan = @planName WHERE email = @customerEmail`;
