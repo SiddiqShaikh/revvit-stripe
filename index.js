@@ -16,20 +16,20 @@ const figureOutPricePlan = (price) => {
 };
 const updateUserInDatabase = async (email, planName) => {
   try {
-   const config = {
-  user: "sqlserver",
-  password: "ModelHealth@1234",
-  server: "34.173.12.179",
-  port: 1433, // Add the port here
-  database: "Revit_Payment", // Replace with your actual database name
-  options: {
-    encrypt: true, // Use true if required (e.g., for Azure SQL)
-    trustServerCertificate: true, // Set to true if you're using self-signed certificates
-  },
-};
+    const config = {
+      user: "sqlserver",
+      password: "ModelHealth@1234",
+      server: "34.173.12.179",
+      port: 1433,
+      database: "Revit_Payment",
+      options: {
+        encrypt: true,
+        trustServerCertificate: true,
+      },
+    };
     const pool = await sql.connect(config);
 
-    const query = `UPDATE Users SET plan = @planName WHERE email = @customerEmail`;
+    const query = `UPDATE Users SET [plan] = @planName WHERE email = @customerEmail`;
 
     const result = await pool
       .request()
@@ -44,7 +44,6 @@ const updateUserInDatabase = async (email, planName) => {
     sql.close();
   }
 };
-
 app.post("/hooks", async (req, res) => {
   const event = req.body;
 
